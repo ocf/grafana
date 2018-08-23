@@ -1,0 +1,10 @@
+apiVersion: 1
+
+datasources:
+- name: Prometheus
+  type: prometheus
+  access: direct
+  url: https://prometheus.ocf.berkeley.edu/
+  isDefault: true
+  version: 1
+  editable: false

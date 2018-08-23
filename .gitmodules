@@ -1,0 +1,3 @@
+[submodule "dashboards/grafana-dashboards"]
+	path = dashboards/grafana-dashboards
+	url = https://github.com/finn-no/grafana-dashboards
