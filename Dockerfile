@@ -1,4 +1,5 @@
-FROM grafana/grafana:latest
+ARG grafana_version=latest
+FROM grafana/grafana:${grafana_version}
 
 COPY grafana.ini /etc/grafana
 COPY provisioning /etc/grafana/provisioning
