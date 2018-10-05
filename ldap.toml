@@ -1,0 +1,28 @@
+[[servers]]
+host = "ldap.ocf.berkeley.edu"
+port = 636
+use_ssl = true
+
+bind_dn = "uid=%s,ou=People,dc=OCF,dc=Berkeley,dc=EDU"
+search_filter = "(uid=%s)"
+search_base_dns = ["ou=People,dc=OCF,dc=Berkeley,dc=EDU"]
+group_search_filter = "(&(objectClass=posixGroup)(memberUid=%s))"
+group_search_base_dns = ["ou=Group,dc=OCF,dc=Berkeley,dc=EDU"]
+group_search_filter_user_attribute = "uid"
+
+[servers.attributes]
+username = "uid"
+member_of = "dn"
+
+[[servers.group_mappings]]
+group_dn = "cn=ocfroot,ou=Group,dc=OCF,dc=Berkeley,dc=EDU"
+org_role = "Admin"
+grafana_admin = true
+
+[[servers.group_mappings]]
+group_dn = "cn=ocfstaff,ou=Group,dc=OCF,dc=Berkeley,dc=EDU"
+org_role = "Editor"
+
+[[servers.group_mappings]]
+group_dn = "*"
+org_role = "Viewer"
