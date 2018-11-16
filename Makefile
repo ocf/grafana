@@ -1,5 +1,6 @@
 DOCKER_REVISION ?= grafana-testing-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/grafana:$(DOCKER_REVISION)
+DOCKER_LATEST = docker-push.ocf.berkeley.edu/grafana:latest
 RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 2 )))
 
 GF_VERSION := 5.3.4
@@ -15,4 +16,5 @@ cook-image:
 
 .PHONY: push-image
 push-image:
+	docker tag $(DOCKER_LATEST) $(DOCKER_TAG)
 	docker push $(DOCKER_TAG)
