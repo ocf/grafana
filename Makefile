@@ -2,7 +2,7 @@ DOCKER_REVISION ?= grafana-testing-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/grafana:$(DOCKER_REVISION)
 RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 2 )))
 
-GF_VERSION := 6.1.6
+GF_VERSION := 6.2.0
 
 .PHONY: dev
 dev: cook-image
