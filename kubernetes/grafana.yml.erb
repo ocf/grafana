@@ -59,6 +59,8 @@ spec:
               value: /etc/secrets/admin-pass
             - name: GF_SESSION_PROVIDER_CONFIG__FILE
               value: /etc/secrets/provider-config
+            - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE
+              value: /etc/secrets/keycloak-secret
 
       volumes:
         - name: secrets
