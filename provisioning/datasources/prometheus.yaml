@@ -3,8 +3,24 @@ apiVersion: 1
 datasources:
 - name: Prometheus
   type: prometheus
-  access: direct
+  access: proxy
   url: https://prometheus.ocf.berkeley.edu/
+  basicAuth: true
+  basicAuthUser: $PROMETHEUS_AUTH_USER
+  secureJsonData:
+    basicAuthPassword: $PROMETHEUS_AUTH_PASSWORD
   isDefault: true
+  version: 1
+  editable: false
+
+- name: Dev Prometheus
+  type: prometheus
+  access: proxy
+  url: https://dev-prometheus.ocf.berkeley.edu/
+  basicAuth: true
+  basicAuthUser: $PROMETHEUS_AUTH_USER
+  secureJsonData:
+    basicAuthPassword: $PROMETHEUS_AUTH_PASSWORD
+  isDefault: false
   version: 1
   editable: false

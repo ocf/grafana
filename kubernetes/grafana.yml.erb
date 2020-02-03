@@ -62,6 +62,17 @@ spec:
             - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE
               value: /etc/secrets/keycloak-secret
 
+            - name: PROMETHEUS_AUTH_USER
+              valueFrom:
+                secretKeyRef:
+                  name: prometheus-auth
+                  key: username
+            - name: PROMETHEUS_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: prometheus-auth
+                  key: password
+
       volumes:
         - name: secrets
           hostPath:
@@ -85,3 +96,12 @@ spec:
           - backend:
               serviceName: service
               servicePort: 80
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prometheus-auth
+type: Opaque
+stringData:
+  username: ocfgrafana
+  password: "<%= prometheus_pass %>"
