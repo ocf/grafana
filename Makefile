@@ -3,7 +3,7 @@ DOCKER_TAG = docker-push.ocf.berkeley.edu/grafana:$(DOCKER_REVISION)
 RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 2 )))
 
 # OCF-UPDATE-CHECK relmon=13916
-GF_VERSION := 10.2.2
+GF_VERSION := 10.4.2
 
 .PHONY: dev
 dev: cook-image
