@@ -34,51 +34,9 @@ spec:
               cpu: 175m
           ports:
             - containerPort: 3000
-          volumeMounts:
-            - mountPath: /etc/secrets
-              name: secrets
-          env:
-            - name: GF_SERVER_ROOT_URL
-              value: https://grafana.ocf.berkeley.edu/
-            - name: GF_DATABASE_TYPE
-              value: mysql
-            - name: GF_DATABASE_HOST
-              value: mysql
-            - name: GF_DATABASE_NAME
-              value: ocfgrafana
-            - name: GF_DATABASE_USER
-              value: ocfgrafana
-            - name: GF_SESSION_PROVIDER
-              value: mysql
-            - name: GF_SESSION_COOKIE_SECURE
-              value: "true"
-
-            - name: GF_DATABASE_PASSWORD__FILE
-              value: /etc/secrets/mysql-pass
-            - name: GF_SECURITY_ADMIN_PASSWORD__FILE
-              value: /etc/secrets/admin-pass
-            - name: GF_SESSION_PROVIDER_CONFIG__FILE
-              value: /etc/secrets/provider-config
-            - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE
-              value: /etc/secrets/keycloak-secret
-
-            - name: PROMETHEUS_AUTH_USER
-              valueFrom:
-                secretKeyRef:
-                  name: prometheus-auth
-                  key: username
-            - name: PROMETHEUS_AUTH_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: prometheus-auth
-                  key: password
-
-      volumes:
-        - name: secrets
-          hostPath:
-            path: /opt/share/kubernetes/secrets/grafana
-            type: Directory
-
+          envFrom:
+            - secretRef:
+                name: grafana-secret
       dnsPolicy: ClusterFirst
       dnsConfig:
         searches:
@@ -100,8 +58,19 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: prometheus-auth
+  name: grafana-secret
 type: Opaque
 stringData:
-  username: ocfgrafana
-  password: "<%= prometheus_pass %>"
+  GF_SERVER_ROOT_URL: "https://grafana.ocf.berkeley.edu"
+  GF_DATABASE_TYPE: mysql
+  GF_DATABASE_HOST: mysql
+  GF_DATABASE_NAME: ocfgrafana
+  GF_DATABASE_USER: ocfgrafana
+  GF_SESSION_PROVIDER: mysql
+  GF_SESSION_COOKIE_SECURE: "true"
+  GF_DATABASE_PASSWORD: "<%= mysql_pass %>"
+  GF_SECURITY_ADMIN_PASSWORD: "<%= admin_pass %>"
+  GF_SESSION_PROVIDER_CONFIG: "<%= provider_config %>"
+  GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "<%= keycloak_secret %>"
+  PROMETHEUS_AUTH_USER: ocfgrafana
+  PROMETHEUS_AUTH_PASSWORD: "<%= prometheus_pass %>"
