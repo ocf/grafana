@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: MySQL Printing
+    type: mysql
+    url: mysql
+    database: ocfprinting
+    user: $GF_DATABASE_USER
+    password: $GF_DATABASE_PASSWORD
+
+  - name: MySQL Stats
+    type: mysql
+    url: mysql
+    database: ocfstats
+    user: $GF_DATABASE_USER
+    password: $GF_DATABASE_PASSWORD
