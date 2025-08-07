@@ -6,10 +6,6 @@ from transpire.utils import get_image_tag
 
 name = "grafana"
 
-# Add grafana image to ghcr
-def images():
-    yield Image(name="grafana", path=Path("/"), registry="ghcr")
-
 # Create K8S objects for Grafana
 def objects():
     yield Ingress(
@@ -58,9 +54,13 @@ def objects():
 
     # We inject ConfigMap and secrets to deployment env with
     # pod_spec().with_configmap_env() and pod_spec().with_secret_env()
-    yield Deployment(
+    deployment = Deployment(
         name="grafana",
         image=get_image_tag("grafana"),
         ports=[3000],
-    ).pod_spec().with_configmap_env("grafana").with_secret_env("prometheus-auth").build()
+    ).pod_spec().with_configmap_env("grafana").with_secret_env("prometheus-auth")
+    yield deployment.build()
 
+# Add grafana image to ghcr
+def images():
+    yield Image(name="grafana", path=Path("/"), registry="ghcr")
