@@ -16,11 +16,13 @@ def objects():
     ).build()
 
     yield Secret(
-        name="prometheus-auth",
+        name="grafana",
         string_data={
-            "username": "ocfgrafana",
-            # <%=prometheus_pass>
-            "password": "",
+            "PROMETHEUS_AUTH_PASSWORD": "",
+            "GF_DATABASE_PASSWORD": "",
+            "GF_SECURITY_ADMIN_PASSWORD": "",
+            "GF_SESSION_PROVIDER_CONFIG": "",
+            "GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET": "",
         }
     ).build()
 
@@ -45,10 +47,7 @@ def objects():
             "GF_DATABASE_USER": "ocfgrafana",
             "GF_SESSION_PROVIDER": "mysql",
             "GF_SESSION_COOKIE_SECURE": "true",
-            "GF_DATABASE_PASSWORD__FILE": "/etc/secrets/mysql-pass",
-            "GF_SECURITY_ADMIN_PASSWORD__FILE": "/etc/secrets/admin-pass",
-            "GF_SESSION_PROVIDER_CONFIG__FILE": "/etc/secrets/provider-config",
-            "GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE": "/etc/secrets/keycloak-secret",
+            "PROMETHEUS_AUTH_USER": "ocfgrafana",
         }
     ).build()
 
