@@ -47,7 +47,7 @@ def objects():
             "GF_DATABASE_USER": "ocfgrafana",
             "GF_SESSION_PROVIDER": "mysql",
             "GF_SESSION_COOKIE_SECURE": "true",
-            "PROMETHEUS_AUTH_USER": "ocfgrafana",
+            "PROMETHEUS_AUTH_USER": "ocfadmin",
         }
     ).build()
 
