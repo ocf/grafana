@@ -58,7 +58,7 @@ def objects():
     )
     # We inject ConfigMap and secrets to deployment env with
     # pod_spec().with_configmap_env() and pod_spec().with_secret_env()
-    deployment.pod_spec().with_configmap_env("grafana").with_secret_env("prometheus-auth")
+    deployment.pod_spec().with_configmap_env("grafana").with_secret_env("grafana")
     yield deployment.build()
 
 # Add grafana image to ghcr
