@@ -9,9 +9,8 @@ name = "grafana"
 # Create K8S objects for Grafana
 def objects():
     yield Ingress(
-        ingress_name="virtual-host-ingress",
         host="grafana.ocf.berkeley.edu",
-        service_name="service",
+        service_name="grafana-web",
         service_port=80,
     ).build()
 
@@ -25,18 +24,7 @@ def objects():
             "GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET": "",
         }
     ).build()
-
-    yield Service(
-        name="service",
-        selector={
-            "app": "grafana",
-        },
-        # Transpire: Port
-        port_on_svc=80,
-        # Transpire: Target Port
-        port_on_pod=3000
-    ).build()
-
+    
     yield ConfigMap(
         name="grafana",
         data={
@@ -50,6 +38,7 @@ def objects():
             "PROMETHEUS_AUTH_USER": "ocfadmin",
         }
     ).build()
+ 
 
     deployment = Deployment(
         name="grafana",
@@ -60,6 +49,17 @@ def objects():
     # pod_spec().with_configmap_env() and pod_spec().with_secret_env()
     deployment.pod_spec().with_configmap_env("grafana").with_secret_env("grafana")
     yield deployment.build()
+    
+   
+    yield Service(
+        name="grafana-web",
+        selector=deployment.get_selector()
+        # Transpire: Port
+        port_on_svc=80,
+        # Transpire: Target Port
+        port_on_pod=3000
+    ).build()
+
 
 # Add grafana image to ghcr
 def images():
