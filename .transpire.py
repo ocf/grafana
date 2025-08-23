@@ -32,7 +32,7 @@ def objects():
             "app": "grafana",
         },
         # Transpire: Port
-        port_on_svc=90,
+        port_on_svc=80,
         # Transpire: Target Port
         port_on_pod=3000
     ).build()
