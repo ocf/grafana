@@ -53,7 +53,7 @@ def objects():
    
     yield Service(
         name="grafana-web",
-        selector=deployment.get_selector()
+        selector=deployment.get_selector(),
         # Transpire: Port
         port_on_svc=80,
         # Transpire: Target Port
